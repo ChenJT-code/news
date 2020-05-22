@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// import { Toast } from 'vant'
 export default {
   props: ['placeholder', 'value', 'rules', 'msg_err'],
   data () {
@@ -43,7 +44,9 @@ export default {
         if (!this.rules.test(event.target.value)) {
           this.statu = 'error'
           // 给出提示
-          alert(this.msg_err)
+          // alert(this.msg_err)
+          // Toast.fail(this.msg_err)
+          this.$toast.fail(this.msg_err)
         }
       }
     }
