@@ -1,15 +1,20 @@
 <template>
   <div>
-    <myinput
+    <!-- <myinput
         placeholder="请输入用户名"
         :value="userobj.username"
-        @aaaa="handleruserinput"
+        @input="handleruserinput"
+    ></myinput> -->
+    <myinput
+        placeholder="请输入手机号"
+        v-model="userobj.username"
+        :rules='/^1[3456789]\d{9}$/'
+        msg_err='手机号输入错误'
     ></myinput>
 
     <myinput
         placeholder="输入密码"
-        :value="userobj.password"
-        @bbbb="cccc"
+        v-model="userobj.password"
     ></myinput>
 
     <mybutton text="登录" @click="login" type="danger"></mybutton>
@@ -27,22 +32,22 @@ export default {
   data () {
     return {
       userobj: {
-        username: 'ccc',
-        password: '123'
+        username: '',
+        password: ''
       }
     }
   },
   methods: {
     login () {
       console.log(this.userobj)
-    },
-    // 接收子组件中传递的数据，获取用户输入
-    handleruserinput (data) {
-      this.userobj.username = data
-    },
-    cccc (data) {
-      this.userobj.password = data
     }
+    // 接收子组件中传递的数据，获取用户输入
+    // handleruserinput (data) {
+    //   this.userobj.username = data
+    // }
+    // cccc (data) {
+    //   this.userobj.password = data
+    // }
   }
 }
 </script>
