@@ -24,6 +24,8 @@
 <script>
 import Mybutton from '@/components/mybutton'
 import Myinput from '@/components/myinput'
+import { login } from '@/apis/users'
+
 export default {
   components: {
     Mybutton,
@@ -32,14 +34,20 @@ export default {
   data () {
     return {
       userobj: {
-        username: '',
-        password: ''
+        username: '123456',
+        password: '123456'
       }
     }
   },
   methods: {
     login () {
-      console.log(this.userobj)
+      login(this.userobj)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
     // 接收子组件中传递的数据，获取用户输入
     // handleruserinput (data) {
