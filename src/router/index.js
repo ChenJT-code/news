@@ -37,5 +37,19 @@ var router = new VueRouter({
   ]
 })
 
-// 5 暴露
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.path.indexOf('/personal/') === 0) {
+    const token = localStorage.getItem('news_Authorization')
+    if (token) {
+      next()
+    } else {
+      next({ name: 'Login' })
+    }
+  } else {
+    next()
+  }
+})
+
+// 6 暴露
 export default router
