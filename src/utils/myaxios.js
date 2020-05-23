@@ -2,6 +2,7 @@
 import axios from 'axios'
 // 2 设置基准路径
 axios.defaults.baseURL = 'http://127.0.0.1:3000'
+localStorage.setItem('new_baseurl', 'http://127.0.0.1:3000')
 
 // 3 添加请求拦截器
 // 只要使用这个封装的axios发送请求就会经过它的拦截器

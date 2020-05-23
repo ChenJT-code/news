@@ -3,12 +3,12 @@
     <router-link to="/edit_profile">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
-        <img src="http://img1.imgtn.bdimg.com/it/u=3757784226,1202878475&fm=26&gp=0.jpg" alt />
+        <img :src="currentUser.head_img" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>我就是我
+            <span class="iconfont iconxingbienan"></span>{{currentUser.nickname}}
           </div>
-          <div class="time">2019-9-24</div>
+          <div class="time">{{currentUser.time | timeformat}}</div>
         </div>
         <span class="iconfont icon-jiantou"></span>
       </div>
@@ -25,16 +25,37 @@
 <script>
 import mycell from '@/components/mycell.vue'
 import { getUserInfoById } from '@/apis/users.js'
+import { timeformat } from '@/utils/myfilters.js'
 
 export default {
+  data () {
+    return {
+      currentUser: {}
+    }
+  },
   components: {
     mycell
+  },
+  filters: {
+    timeformat
   },
   mounted () {
     const id = this.$route.params.id
     getUserInfoById(id)
       .then(res => {
         console.log(res)
+        if (res.data.message === '获取成功') {
+          this.currentUser = res.data.data
+          this.currentUser.time = new Date()
+          console.log(this.currentUser)
+          console.log(this.currentUser.head_img)
+          // 处理图片
+          if (this.currentUser.head_img) {
+            this.currentUser.head_img = localStorage.getItem('new_baseurl') + this.currentUser.head_img
+          } else {
+            this.currentUser.head_img = './touxiang.jpg'
+          }
+        }
       })
   }
 }
