@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 
 // 引入路由所映射的组件
 import Login from '@/views/login.vue'
+import Register from '@/views/register.vue'
 
 // 3初始化路由
 Vue.use(VueRouter)
@@ -18,9 +19,14 @@ var router = new VueRouter({
       path: '/login',
       component: Login
     },
+    // {
+    //   path: '/',
+    //   redirect: '/login'
+    // },
     {
-      path: '/',
-      redirect: '/login'
+      name: 'Register',
+      path: '/register',
+      component: Register
     }
   ]
 })
