@@ -24,12 +24,18 @@
 
 <script>
 import mycell from '@/components/mycell.vue'
+import { getUserInfoById } from '@/apis/users.js'
+
 export default {
   components: {
     mycell
   },
   mounted () {
-    console.log(this.$route.params)
+    const id = this.$route.params.id
+    getUserInfoById(id)
+      .then(res => {
+        console.log(res)
+      })
   }
 }
 </script>

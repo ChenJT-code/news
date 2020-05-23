@@ -18,3 +18,14 @@ export const register = (data) => {
     data
   })
 }
+
+// 4 根据id获取用户数据
+export const getUserInfoById = (id) => {
+  return axios({
+    headers: {
+      Authorization: localStorage.getItem('news_Authorization')
+    },
+    // method: 'get',
+    url: `/user/${id}`
+  })
+}
