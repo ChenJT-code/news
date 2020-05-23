@@ -50,15 +50,24 @@ export default {
     }
   },
   methods: {
-    login () {
-      login(this.userobj)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    async login () {
+      var res = await login(this.userobj)
+      console.log(res)
+      if (res.data.message === '登录成功') {
+        this.$toast.fail('登陆成功')
+      } else {
+        this.$toast.fail('登录失败')
+      }
     }
+    // login () {
+    //   login(this.userobj)
+    //     .then(res => {
+    //       console.log(res)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
     // 接收子组件中传递的数据，获取用户输入
     // handleruserinput (data) {
     //   this.userobj.username = data

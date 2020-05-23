@@ -56,14 +56,27 @@ export default {
     }
   },
   methods: {
-    register () {
-      register(this.userobj)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    // register () {
+    //   register(this.userobj)
+    //     .then(res => {
+    //       console.log(res)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
+    async register () {
+      var res = await register(this.userobj)
+      console.log(res)
+      if (res.data.message === '注册成功') {
+        this.$toast.fail('注册成功,请进行登陆')
+        this.$router.push({ name: 'Login' })
+      } else if (res.data.message === '用户名已经存在') {
+        this.$toast.fail('该账户已注册,请进行登陆')
+        this.$router.push({ name: 'Login' })
+      } else {
+        this.$toast.fail('注册失败')
+      }
     }
   }
 }
