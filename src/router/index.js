@@ -31,7 +31,7 @@ var router = new VueRouter({
     },
     {
       name: 'PersonalCenter',
-      path: '/personal',
+      path: '/personal/:id',
       component: PersonalCenter
     }
   ]

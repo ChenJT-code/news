@@ -56,7 +56,7 @@ export default {
       if (res.data.message === '登录成功') {
         this.$toast.fail('登陆成功')
         // setTimeout(this.$router.push({ path: '/personal' }), 3000)
-        this.$router.push({ path: '/personal' })
+        this.$router.push({ path: `/personal/${res.data.data.user.id}` })
       } else {
         this.$toast.fail('登录失败')
       }
