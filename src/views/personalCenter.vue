@@ -1,6 +1,6 @@
 <template>
    <div class="personal">
-    <router-link to="/edit_profile">
+    <router-link :to="`/editPersonal/${currentUser.id}`">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
         <img :src="currentUser.head_img" alt />
@@ -40,6 +40,7 @@ export default {
     timeformat
   },
   mounted () {
+    // console.log(this.$route.params)
     const id = this.$route.params.id
     getUserInfoById(id)
       .then(res => {
@@ -47,8 +48,6 @@ export default {
         if (res.data.message === '获取成功') {
           this.currentUser = res.data.data
           this.currentUser.time = new Date()
-          console.log(this.currentUser)
-          console.log(this.currentUser.head_img)
           // 处理图片
           if (this.currentUser.head_img) {
             this.currentUser.head_img = localStorage.getItem('new_baseurl') + this.currentUser.head_img
