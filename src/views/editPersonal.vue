@@ -18,7 +18,7 @@
 
 <script>
 import Mycell from '@/components/mycell.vue'
-import { getUserInfoById } from '@/apis/users.js'
+import { getUserInfoById, updateUserInfo } from '@/apis/users.js'
 import Myheader from '@/components/myheader'
 import { uploadFile } from '@/apis/upload.js'
 
@@ -32,7 +32,15 @@ export default {
     Mycell,
     Myheader
   },
+
   methods: {
+    // 文件读取之前触发
+    // 这里面我们可以判断文件的类型或大小等相关信息，决定是否允许用户上传文件
+    beforeRead (file) {
+      console.log(file)
+    },
+    // 当用户选择完文件之后，触发这个事件
+    // file就是你当前所选择的文件对象
     async afterRead (file) {
       // 此时可以自行将文件上传至服务器
       console.log(file)
@@ -40,15 +48,35 @@ export default {
       formdata.append('file', file.file)
       // 发起请求
       const res = await uploadFile(formdata)
-      console.log(res)
+      // console.log(res)
+      // 做预览刷新
+      if (res.data.message === '文件上传成功') {
+        this.userobj.head_img =
+          localStorage.getItem('new_baseurl') + res.data.data.url
+        // 实现数据的更新
+        const res2 = await updateUserInfo(this.id, {
+          head_img: res.data.data.url
+        })
+        console.log(res2)
+        if (res2.data.message === '修改成功') {
+          this.$toast.success('修改成功')
+        } else {
+          this.$toast.fail('修改失败')
+        }
+      }
     }
   },
+
   async mounted () {
-    const res = await getUserInfoById(this.$route.params.id)
+    this.id = this.$route.params.id
+    const res = await getUserInfoById(this.id)
+    // console.log(this.$route.params.id)
     // console.log(res)
     if (res.data.message === '获取成功') {
       this.userobj = res.data.data
-      this.userobj.head_img = this.userobj.head_img ? localStorage.getItem('new_baseurl') + this.userobj.head_img : '../../public/touxiang.jpg'
+      this.userobj.head_img = this.userobj.head_img
+        ? localStorage.getItem('new_baseurl') + this.userobj.head_img
+        : '../../public/touxiang.jpg'
     }
   }
 }
