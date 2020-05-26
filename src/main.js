@@ -9,9 +9,13 @@ import '@/styles/reset.less'
 import '@/assets/icon/iconfont.css'
 
 // 引入vant组件
-import { Toast, Uploader } from 'vant'
-Vue.use(Toast)
-Vue.use(Uploader)
+// import { Toast, Uploader, Dialog } from 'vant'
+// Vue.use(Toast)
+// Vue.use(Uploader)
+// Vue.use(Dialog)
+import Vant from 'vant'
+import 'vant/lib/index.css'
+Vue.use(Vant)
 
 Vue.config.productionTip = false
 
