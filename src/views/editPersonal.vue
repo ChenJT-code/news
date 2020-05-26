@@ -9,7 +9,13 @@
         <img :src="userobj.head_img" alt />
         <van-uploader :after-read="afterRead" />
       </div>
-      <Mycell title="昵称" :desc="userobj.nickname"></Mycell>
+      <Mycell title="昵称" :desc="userobj.nickname" @click="nickshow=true"></Mycell>
+      <!-- 修改昵称 -->
+      <van-dialog v-model="nickshow" title="标题" show-cancel-button :close-on-click-overlay="true">
+        <van-cell-group>
+          <van-field required clearable v-model="userobj.nickname" label="昵称" placeholder="请输入昵称" />
+        </van-cell-group>
+      </van-dialog>
       <Mycell title="密码" :desc="userobj.password" type="password"></Mycell>
       <Mycell title="性别" :desc="userobj.gender===1?'男':'女'"></Mycell>
     </div>
@@ -25,6 +31,8 @@ import { uploadFile } from '@/apis/upload.js'
 export default {
   data () {
     return {
+      nickshow: false,
+      id: '',
       userobj: {}
     }
   },
@@ -37,7 +45,7 @@ export default {
     // 文件读取之前触发
     // 这里面我们可以判断文件的类型或大小等相关信息，决定是否允许用户上传文件
     beforeRead (file) {
-      console.log(file)
+      // console.log(file)
     },
     // 当用户选择完文件之后，触发这个事件
     // file就是你当前所选择的文件对象
