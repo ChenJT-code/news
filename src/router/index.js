@@ -9,6 +9,7 @@ import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
 import PersonalCenter from '@/views/personalCenter.vue'
 import EditPersonal from '@/views/editPersonal.vue'
+import Index from '@/views/index.vue'
 
 // 3初始化路由
 Vue.use(VueRouter)
@@ -17,14 +18,21 @@ Vue.use(VueRouter)
 var router = new VueRouter({
   routes: [
     {
+      name: 'Index',
+      path: '/',
+      component: Index
+    },
+    {
+      name: 'default',
+      path: '/',
+      // 默认打开index首页，为了提高用户体验
+      redirect: { name: 'Index' }
+    },
+    {
       name: 'Login',
       path: '/login',
       component: Login
     },
-    // {
-    //   path: '/',
-    //   redirect: '/login'
-    // },
     {
       name: 'Register',
       path: '/register',

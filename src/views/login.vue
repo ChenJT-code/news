@@ -57,7 +57,8 @@ export default {
         this.$toast.fail('登陆成功')
         // 将token数据存到本地
         localStorage.setItem('news_Authorization', res.data.data.token)
-        // setTimeout(this.$router.push({ path: '/personal' }), 3000)
+        // 将id号存储到本地
+        localStorage.setItem('news_id', res.data.data.user.id)
         this.$router.push({ path: `/personal/${res.data.data.user.id}` })
       } else {
         this.$toast.fail('登录失败')
