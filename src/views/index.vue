@@ -28,6 +28,14 @@ export default {
       cateList: []
     }
   },
+  watch: {
+    // 监听当前被激活的标签项目
+    active () {
+      // 获取当前栏目的id
+      const id = this.cateList[this.active].id
+      console.log(id)
+    }
+  },
   async mounted () {
     var res = await getCateList()
     // console.log(res)
