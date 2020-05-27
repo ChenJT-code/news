@@ -10,13 +10,9 @@
     </div>
     <!-- 标签页 -->
     <van-tabs v-model="active" sticky swipeable>
-      <van-tab title="标签 1">
+      <van-tab :title="value.name" v-for="(value,index) in cateList" :key="index">
+          内容{{index}}
       </van-tab>
-      <van-tab title="标签 2">内容 2</van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
     </van-tabs>
   </div>
 </template>
@@ -26,12 +22,19 @@ import { getCateList } from '@/apis/category.js'
 export default {
   data () {
     return {
-      active: 0
+      // 当前标签被激活的索引
+      active: localStorage.getItem('news_id') ? 1 : 0,
+      // 栏目数据
+      cateList: []
     }
   },
-  mounted () {
-    var res = getCateList()
-    console.log(res)
+  async mounted () {
+    var res = await getCateList()
+    // console.log(res)
+    if (res.data.data && res.data.data.length > 0) {
+      this.cateList = res.data.data
+      console.log(this.cateList)
+    }
   },
   methods: {
     // 跳转到个人中心页
