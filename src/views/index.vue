@@ -10,9 +10,7 @@
     </div>
     <!-- 标签页 -->
     <van-tabs v-model="active" sticky swipeable>
-      <van-tab :title="value.name" v-for="(value,index) in cateList" :key="index">
-          内容{{index}}
-      </van-tab>
+      <van-tab :title="value.name" v-for="(value,index) in cateList" :key="index">内容{{index}}</van-tab>
     </van-tabs>
   </div>
 </template>
@@ -35,8 +33,16 @@ export default {
       // 获取当前栏目的id
       const id = this.cateList[this.active].id
       console.log(id)
-      const res = await getArticleList({ pageIndex: 1, pageSize: 10, category: id })
-      console.log(res)
+      //   const res = await getArticleList({
+      //     pageIndex: 1,
+      //     pageSize: 10,
+      //     category: id
+      //   })
+      //   //   console.log(res)
+      //   // 将数据存储到当前栏目的数组中
+      //   this.cateList[this.active].articleList = res.data.data
+      //   console.log(this.cateList[this.active])
+      this.init(id)
     }
   },
   async mounted () {
@@ -44,10 +50,34 @@ export default {
     // console.log(res)
     if (res.data.data && res.data.data.length > 0) {
       this.cateList = res.data.data
-      console.log(this.cateList)
+      // 应该对数据进行改造：添加我们后期业务处理所需要的属性
+      // 栏目的文章数据：articleList:[]
+      // 当前页码：pageIndex
+      // 当前每页所显示的数量：pageSize
+      // map会执行回调函数，并将回调函数的结果存储到数组，最终将数组返回
+      this.cateList = this.cateList.map(value => {
+        return {
+          ...value,
+          articleList: [],
+          pageIndex: 1,
+          paseSize: 2
+        }
+      })
+      this.init(this.cateList[this.active].id)
+    //   console.log(this.cateList)
     }
   },
   methods: {
+    async init (id) {
+      const res = await getArticleList({
+        pageIndex: 1,
+        pageSize: 10,
+        category: id
+      })
+      //   console.log(res)
+      this.cateList[this.active].articleList = res.data.data
+      console.log(this.cateList)
+    },
     // 跳转到个人中心页
     goPersonal () {
       const token = localStorage.getItem('news_Authorization')
