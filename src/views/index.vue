@@ -19,6 +19,7 @@
 
 <script>
 import { getCateList } from '@/apis/category.js'
+import { getArticleList } from '@/apis/article.js'
 export default {
   data () {
     return {
@@ -30,10 +31,12 @@ export default {
   },
   watch: {
     // 监听当前被激活的标签项目
-    active () {
+    async active () {
       // 获取当前栏目的id
       const id = this.cateList[this.active].id
       console.log(id)
+      const res = await getArticleList({ pageIndex: 1, pageSize: 10, category: id })
+      console.log(res)
     }
   },
   async mounted () {
