@@ -10,7 +10,9 @@
     </div>
     <!-- 标签页 -->
     <van-tabs v-model="active" sticky swipeable>
-      <van-tab :title="value.name" v-for="(value,index) in cateList" :key="index">内容{{index}}</van-tab>
+      <van-tab :title="value.name" v-for="(value,index) in cateList" :key="index">
+          <articleBlock v-for='(sv,si) in value.articleList' :key='si' :post='sv'></articleBlock>
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -18,7 +20,11 @@
 <script>
 import { getCateList } from '@/apis/category.js'
 import { getArticleList } from '@/apis/article.js'
+import articleBlock from '../components/articleBlock'
 export default {
+  components: {
+    articleBlock
+  },
   data () {
     return {
       // 当前标签被激活的索引
@@ -64,7 +70,7 @@ export default {
         }
       })
       this.init(this.cateList[this.active].id)
-    //   console.log(this.cateList)
+      //   console.log(this.cateList)
     }
   },
   methods: {

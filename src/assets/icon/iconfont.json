@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4745001",
+      "name": "icon_视频-线",
+      "font_class": "icon_shipin-xian",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
       "icon_id": "521953",
       "name": "new",
       "font_class": "new",
